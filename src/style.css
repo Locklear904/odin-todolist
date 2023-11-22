@@ -28,3 +28,7 @@ main {
     grid-column: 1 / 2;
 }
 
+#projectsList {
+    display: flex;
+    flex-direction: column;
+}
