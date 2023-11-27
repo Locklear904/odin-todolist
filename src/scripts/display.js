@@ -1,4 +1,4 @@
-const sidebar = document.querySelector('#sidebar');
+const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
 
 function displaySidebarTodos(project, projectDiv) {
@@ -18,7 +18,7 @@ function displaySidebarContent(projects) {
         //Populates projects
         let projectDiv = document.createElement('div');
         projectDiv.setAttribute('class', 'sideProjectDiv');
-        sidebar.appendChild(projectDiv);
+        projectsList.appendChild(projectDiv);
         let projectTitle = document.createElement('h3');
         projectTitle.textContent = project.title;
         projectTitle.setAttribute('class', 'sideProjectTitle');
@@ -61,4 +61,18 @@ function displayTodos(project) {
     });
 }
 
-export {displaySidebarContent, displayTodos};
+function clearSidebar() {
+    const projectsList = document.querySelector('#projectsList');
+    while (projectsList.firstChild) {
+        projectsList.removeChild(projectsList.firstChild);
+    }
+}
+
+function clearNewProjectForm() {
+    const projectFormDiv = document.querySelector('#projectFormDiv');
+    while (projectFormDiv.firstChild) {
+        projectFormDiv.removeChild(projectFormDiv.firstChild);
+    }
+}
+
+export {displaySidebarContent, displayTodos, clearSidebar, clearNewProjectForm };
