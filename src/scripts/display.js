@@ -37,7 +37,7 @@ function displayTodos(project) {
         let todoDiv = document.createElement('div');
         todoDiv.setAttribute('class', 'todoDiv');
         main.appendChild(todoDiv);
-        let todoTitle = document.createElement('h2');
+        let todoTitle = document.createElement('h3');
         todoTitle.setAttribute('class', 'mainTodoTitle');
         todoTitle.textContent = todo.title;
         todoDiv.appendChild(todoTitle);
@@ -61,6 +61,28 @@ function displayTodos(project) {
     });
 }
 
+function displayProject(project) {
+    let main = document.querySelector('main');
+    let projectDiv = document.createElement('div');
+    projectDiv.setAttribute('class', 'projectDiv');
+    main.appendChild(projectDiv);
+    let projectHeader = document.createElement('div');
+    projectHeader.setAttribute('class', 'projectHeader');
+    projectDiv.appendChild(projectHeader);
+    let projectTitle = document.createElement('h2');
+    projectTitle.textContent = project.title;
+    projectTitle.setAttribute('class', 'projectTitle');
+    projectHeader.appendChild(projectTitle);
+    let projectEditButton = document.createElement('button')
+    projectEditButton.setAttribute('class', 'projectEditBtn');
+    projectEditButton.textContent = "Edit Project";
+    projectHeader.appendChild(projectEditButton);
+    let projectDescription = document.createElement('p');
+    projectDescription.setAttribute('class', 'projectDescription');
+    projectDescription.textContent = project.description;
+    projectDiv.appendChild(projectDescription);
+}
+
 function clearSidebar() {
     const projectsList = document.querySelector('#projectsList');
     while (projectsList.firstChild) {
@@ -75,4 +97,27 @@ function clearNewProjectForm() {
     }
 }
 
-export {displaySidebarContent, displayTodos, clearSidebar, clearNewProjectForm };
+function createNewProjectForm() {
+    const projectFormDiv = document.querySelector('#projectFormDiv');
+    const createProjectTitleLabel = document.createElement('label');
+    createProjectTitleLabel.textContent = "Project Title: ";
+    createProjectTitleLabel.setAttribute('for', 'createProjectTitle');
+    projectFormDiv.appendChild(createProjectTitleLabel);
+    const createProjectTitle = document.createElement('input');
+    createProjectTitle.setAttribute('type', 'text');
+    createProjectTitle.setAttribute('id', 'createProjectTitle');
+    projectFormDiv.appendChild(createProjectTitle);
+    const createProjectDescLabel = document.createElement('label');
+    createProjectDescLabel.textContent = "Project Description: ";
+    createProjectDescLabel.setAttribute('for', 'createProjectDescription');
+    projectFormDiv.appendChild(createProjectDescLabel);
+    const createProjectDescription = document.createElement('textarea');
+    createProjectDescription.setAttribute('id', 'createProjectDescription');
+    projectFormDiv.appendChild(createProjectDescription);
+    const createProjectSubmitButton = document.createElement('button');
+    createProjectSubmitButton.textContent = "Submit";
+    createProjectSubmitButton.addEventListener('click', createNewProject);
+    projectFormDiv.appendChild(createProjectSubmitButton);
+}
+
+export {displaySidebarContent, displayTodos, clearSidebar, clearNewProjectForm, createNewProjectForm, displayProject };
