@@ -5,17 +5,20 @@ body {
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-template-rows: 1fr 4fr;
+    grid-template-rows: auto 4fr;
 }
 
 header {
     grid-row: 1 / 2;
     grid-column: 1 / 3;
     text-align: center;
+    border-bottom: 2px solid black;
 }
 
 h1 {
     font-size: 3rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 main {
@@ -26,8 +29,18 @@ main {
     align-items: center;
 }
 
-.projectDiv {
-    width: 50%;
+.projectDiv, .todoDiv {
+    width: 75%;
+}
+
+.projectHeader, .todoHeader, .todoInfoDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todoDiv {
+    border-top: 1px solid black;
 }
 
 #sidebar {
@@ -38,6 +51,7 @@ main {
     gap: 10px;
     border-right: 2px solid black;
     padding: 10px;
+    min-height: 90vh;
 }
 
 #projectsHeader {
@@ -77,8 +91,3 @@ main {
     align-self: center;
 }
 
-.projectHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}

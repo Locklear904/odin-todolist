@@ -9,11 +9,10 @@ class Project {
 }
 
 class Todo extends Project {
-    constructor(title, description = "", dueDate, priority = "Low", notes = "") {
+    constructor(title, description = "", dueDate = "None", priority = "Low") {
         super(title, description);
         this.dueDate = dueDate;
         this.priority = priority;
-        this.notes = notes;
     }
 }
 
@@ -34,7 +33,7 @@ function createNewProject() {
 
 function setupDefaults() {
     const defaultProject = new Project("Default", "This is the default project");
-    const defaultTodo = new Todo("Test Todo", "Test Description", "2023-11-30", "Low", "Notes");
+    const defaultTodo = new Todo("Test Todo", "Test Description", "2023-11-30", "Low");
     projects.push(defaultProject);
     defaultProject.todos.push(defaultTodo);
     displaySidebarContent(projects);
