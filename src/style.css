@@ -26,14 +26,31 @@ main {
     align-items: center;
 }
 
+.projectDiv {
+    width: 50%;
+}
+
 #sidebar {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
+    border-right: 2px solid black;
+    padding: 10px;
 }
 
 #projectsHeader {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+#projectFormDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#createProjectButtonDiv {
+    display: flex;
     justify-content: space-between;
 }
 
@@ -45,6 +62,7 @@ main {
 .sideProjectDiv {
     display: flex;
     flex-direction: column;
+    border-bottom: 1px solid black;
 }
 
 .sideProjectTitle {

@@ -1,5 +1,6 @@
 const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
+import { createNewProject } from "./appLogic";
 
 function displaySidebarTodos(project, projectDiv) {
     project.todos.forEach((todo) => {
@@ -62,22 +63,21 @@ function displayTodos(project) {
 }
 
 function displayProject(project) {
-    let main = document.querySelector('main');
-    let projectDiv = document.createElement('div');
+    const projectDiv = document.createElement('div');
     projectDiv.setAttribute('class', 'projectDiv');
     main.appendChild(projectDiv);
-    let projectHeader = document.createElement('div');
+    const projectHeader = document.createElement('div');
     projectHeader.setAttribute('class', 'projectHeader');
     projectDiv.appendChild(projectHeader);
-    let projectTitle = document.createElement('h2');
+    const projectTitle = document.createElement('h2');
     projectTitle.textContent = project.title;
     projectTitle.setAttribute('class', 'projectTitle');
     projectHeader.appendChild(projectTitle);
-    let projectEditButton = document.createElement('button')
+    const projectEditButton = document.createElement('button')
     projectEditButton.setAttribute('class', 'projectEditBtn');
     projectEditButton.textContent = "Edit Project";
     projectHeader.appendChild(projectEditButton);
-    let projectDescription = document.createElement('p');
+    const projectDescription = document.createElement('p');
     projectDescription.setAttribute('class', 'projectDescription');
     projectDescription.textContent = project.description;
     projectDiv.appendChild(projectDescription);
@@ -99,6 +99,10 @@ function clearNewProjectForm() {
 
 function createNewProjectForm() {
     const projectFormDiv = document.querySelector('#projectFormDiv');
+    const projectFormHeader = document.createElement('h3');
+    projectFormHeader.textContent = "Create a Project"
+    projectFormHeader.setAttribute('id', 'projectFormHeader');
+    projectFormDiv.appendChild(projectFormHeader);
     const createProjectTitleLabel = document.createElement('label');
     createProjectTitleLabel.textContent = "Project Title: ";
     createProjectTitleLabel.setAttribute('for', 'createProjectTitle');
@@ -114,10 +118,17 @@ function createNewProjectForm() {
     const createProjectDescription = document.createElement('textarea');
     createProjectDescription.setAttribute('id', 'createProjectDescription');
     projectFormDiv.appendChild(createProjectDescription);
+    const createProjectButtonDiv = document.createElement('div');
+    createProjectButtonDiv.setAttribute('id', 'createProjectButtonDiv');
+    projectFormDiv.appendChild(createProjectButtonDiv);
     const createProjectSubmitButton = document.createElement('button');
     createProjectSubmitButton.textContent = "Submit";
     createProjectSubmitButton.addEventListener('click', createNewProject);
-    projectFormDiv.appendChild(createProjectSubmitButton);
+    createProjectButtonDiv.appendChild(createProjectSubmitButton);
+    const createProjectCancelButton = document.createElement('button');
+    createProjectCancelButton.textContent = "Cancel";
+    createProjectCancelButton.addEventListener('click', clearNewProjectForm);
+    createProjectButtonDiv.appendChild(createProjectCancelButton);
 }
 
 export {displaySidebarContent, displayTodos, clearSidebar, clearNewProjectForm, createNewProjectForm, displayProject };

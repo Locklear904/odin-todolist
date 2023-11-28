@@ -19,10 +19,6 @@ class Todo extends Project {
 
 const projects = [];
 
-
-
-
-
 function createNewProject() {
     const projectTitle = document.querySelector('#createProjectTitle').value;
     const projectDesc = document.querySelector('#createProjectDescription').value;
