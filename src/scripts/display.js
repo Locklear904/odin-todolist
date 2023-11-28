@@ -2,12 +2,12 @@ const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
 import { createNewProject } from "./appLogic";
 
-function displaySidebarTodos(project, projectDiv) {
+function displaySidebarTodos(project, projectTodos) {
     project.todos.forEach((todo) => {
         let sideTodoDiv = document.createElement('div');
         sideTodoDiv.setAttribute('class', 'sideTodoDiv');
-        projectDiv.appendChild(sideTodoDiv);
-        let sideTodoTitle = document.createElement('h4');
+        projectTodos.appendChild(sideTodoDiv);
+        let sideTodoTitle = document.createElement('li');
         sideTodoTitle.textContent = todo.title;
         sideTodoTitle.setAttribute('class', 'sideTodoTitle');
         sideTodoDiv.appendChild(sideTodoTitle);
@@ -24,12 +24,11 @@ function displaySidebarContent(projects) {
         projectTitle.textContent = project.title;
         projectTitle.setAttribute('class', 'sideProjectTitle');
         projectDiv.appendChild(projectTitle);
-        let projectDescription = document.createElement('p');
-        projectDescription.setAttribute('class', 'sideProjectDescription');
-        projectDescription.textContent = project.description;
-        projectDiv.appendChild(projectDescription);
+        let projectTodos = document.createElement('ul');
+        projectTodos.setAttribute('class', 'sideTodoList');
+        projectDiv.appendChild(projectTodos);
         //Populates todos
-        displaySidebarTodos(project, projectDiv);
+        displaySidebarTodos(project, projectTodos);
     });
 }
 
