@@ -1,6 +1,6 @@
 const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
-import { createNewProject } from "./appLogic";
+import { createNewProject, createNewTodo } from "./appLogic";
 
 function displaySidebarTodos(project, projectTodos) {
     project.todos.forEach((todo) => {
@@ -20,7 +20,7 @@ function displaySidebarContent(projects) {
         let projectDiv = document.createElement('div');
         projectDiv.setAttribute('class', 'sideProjectDiv');
         projectsList.appendChild(projectDiv);
-        let projectTitle = document.createElement('h3');
+        let projectTitle = document.createElement('button');
         projectTitle.textContent = project.title;
         projectTitle.setAttribute('class', 'sideProjectTitle');
         projectDiv.appendChild(projectTitle);
@@ -53,6 +53,7 @@ function displayTodos(project) {
         todoBtnDiv.appendChild(todoEditBtn);
         let todoDeleteBtn = document.createElement('button');
         todoDeleteBtn.setAttribute('class', 'todoDeleteBtn');
+        todoDeleteBtn.setAttribute('title', 'Delete Todo')
         todoDeleteBtn.textContent = "x";
         todoBtnDiv.appendChild(todoDeleteBtn);
         let todoInfoDiv = document.createElement('div');
@@ -77,7 +78,7 @@ function displayTodos(project) {
 function displayProject(project) {
     const projectDiv = document.createElement('div');
     projectDiv.setAttribute('class', 'projectDiv');
-    main.appendChild(projectDiv);
+    main.prepend(projectDiv);
     const projectHeader = document.createElement('div');
     projectHeader.setAttribute('class', 'projectHeader');
     projectDiv.appendChild(projectHeader);
@@ -85,10 +86,24 @@ function displayProject(project) {
     projectTitle.textContent = project.title;
     projectTitle.setAttribute('class', 'projectTitle');
     projectHeader.appendChild(projectTitle);
+    const projectBtnDiv = document.createElement('div');
+    projectBtnDiv.setAttribute('id', 'projectBtnDiv');
+    projectHeader.appendChild(projectBtnDiv);
     const projectEditButton = document.createElement('button')
     projectEditButton.setAttribute('class', 'projectEditBtn');
-    projectEditButton.textContent = "Edit Project";
-    projectHeader.appendChild(projectEditButton);
+    projectEditButton.textContent = "Edit";
+    projectBtnDiv.appendChild(projectEditButton);
+    const createTodoBtn = document.createElement('button');
+    createTodoBtn.setAttribute('id', 'createTodoBtn');
+    createTodoBtn.setAttribute('title', 'Create New Todo');
+    createTodoBtn.textContent = "+";
+    createTodoBtn.addEventListener('click', createNewTodoForm);
+    projectBtnDiv.appendChild(createTodoBtn);
+    const projectDeleteBtn = document.createElement('button');
+    projectDeleteBtn.setAttribute('id', 'projectDeleteBtn');
+    projectDeleteBtn.setAttribute('title', 'Delete Project');
+    projectDeleteBtn.textContent = "x";
+    projectBtnDiv.appendChild(projectDeleteBtn);
     const projectDescription = document.createElement('p');
     projectDescription.setAttribute('class', 'projectDescription');
     projectDescription.textContent = project.description;
@@ -103,44 +118,119 @@ function clearSidebar() {
 }
 
 function clearNewProjectForm() {
-    const projectFormDiv = document.querySelector('#projectFormDiv');
-    while (projectFormDiv.firstChild) {
-        projectFormDiv.removeChild(projectFormDiv.firstChild);
+    const projectForm = document.querySelector('#projectForm');
+    while (projectForm.firstChild) {
+        projectForm.removeChild(projectForm.firstChild);
+    }
+}
+
+function clearNewTodoForm() {
+    const todoForm = document.querySelector('#todoForm');
+    while (todoForm.firstChild) {
+        todoForm.removeChild(todoForm.firstChild);
     }
 }
 
 function createNewProjectForm() {
-    const projectFormDiv = document.querySelector('#projectFormDiv');
+    const projectForm = document.querySelector('#projectForm');
+    if (projectForm.firstChild) {
+        return;
+    }
     const projectFormHeader = document.createElement('h3');
     projectFormHeader.textContent = "Create a Project"
     projectFormHeader.setAttribute('id', 'projectFormHeader');
-    projectFormDiv.appendChild(projectFormHeader);
+    projectForm.appendChild(projectFormHeader);
     const createProjectTitleLabel = document.createElement('label');
     createProjectTitleLabel.textContent = "Project Title: ";
     createProjectTitleLabel.setAttribute('for', 'createProjectTitle');
-    projectFormDiv.appendChild(createProjectTitleLabel);
+    projectForm.appendChild(createProjectTitleLabel);
     const createProjectTitle = document.createElement('input');
     createProjectTitle.setAttribute('type', 'text');
     createProjectTitle.setAttribute('id', 'createProjectTitle');
-    projectFormDiv.appendChild(createProjectTitle);
+    createProjectTitle.setAttribute('required', '');
+    projectForm.appendChild(createProjectTitle);
     const createProjectDescLabel = document.createElement('label');
     createProjectDescLabel.textContent = "Project Description: ";
     createProjectDescLabel.setAttribute('for', 'createProjectDescription');
-    projectFormDiv.appendChild(createProjectDescLabel);
+    projectForm.appendChild(createProjectDescLabel);
     const createProjectDescription = document.createElement('textarea');
     createProjectDescription.setAttribute('id', 'createProjectDescription');
-    projectFormDiv.appendChild(createProjectDescription);
+    projectForm.appendChild(createProjectDescription);
     const createProjectButtonDiv = document.createElement('div');
     createProjectButtonDiv.setAttribute('id', 'createProjectButtonDiv');
-    projectFormDiv.appendChild(createProjectButtonDiv);
+    projectForm.appendChild(createProjectButtonDiv);
     const createProjectSubmitButton = document.createElement('button');
     createProjectSubmitButton.textContent = "Submit";
+    createProjectSubmitButton.setAttribute('type', 'button');
     createProjectSubmitButton.addEventListener('click', createNewProject);
     createProjectButtonDiv.appendChild(createProjectSubmitButton);
     const createProjectCancelButton = document.createElement('button');
     createProjectCancelButton.textContent = "Cancel";
     createProjectCancelButton.addEventListener('click', clearNewProjectForm);
     createProjectButtonDiv.appendChild(createProjectCancelButton);
+}
+
+function createNewTodoForm() {
+    const todoForm = document.querySelector('#todoForm');
+    if (todoForm.firstChild) {
+        return;
+    }
+    const todoFormHeader = document.createElement('h3');
+    todoFormHeader.textContent = "Create a New Todo";
+    todoForm.appendChild(todoFormHeader);
+    const createTodoTitleLabel = document.createElement('label');
+    createTodoTitleLabel.textContent = "Todo Title: ";
+    createTodoTitleLabel.setAttribute('for', 'createTodoTitle');
+    todoForm.appendChild(createTodoTitleLabel);
+    const createTodoTitle = document.createElement('input');
+    createTodoTitle.setAttribute('type', 'text');
+    createTodoTitle.setAttribute('id', 'createTodoTitle');
+    todoForm.appendChild(createTodoTitle);
+    const createTodoDescLabel = document.createElement('label');
+    createTodoDescLabel.textContent = "Todo Description: ";
+    createTodoDescLabel.setAttribute('for', 'createTodoDesc');
+    todoForm.appendChild(createTodoDescLabel);
+    const createTodoDesc = document.createElement('textarea');
+    createTodoDesc.setAttribute('id', 'createTodoDesc');
+    todoForm.appendChild(createTodoDesc);
+    const createTodoPrioLabel = document.createElement('label');
+    createTodoPrioLabel.textContent = "Todo Priority: ";
+    createTodoPrioLabel.setAttribute('for', 'createTodoPrio');
+    todoForm.appendChild(createTodoPrioLabel);
+    const createTodoPrio = document.createElement('select');
+    createTodoPrio.setAttribute('id', 'createTodoPrio');
+    todoForm.appendChild(createTodoPrio);
+    const prioOptionOne = document.createElement('option');
+    prioOptionOne.setAttribute('value', 'High');
+    prioOptionOne.textContent = "High";
+    createTodoPrio.appendChild(prioOptionOne);
+    const prioOptionTwo = document.createElement('option');
+    prioOptionTwo.setAttribute('value', 'Medium');
+    prioOptionTwo.textContent = "Medium";
+    createTodoPrio.appendChild(prioOptionTwo);
+    const prioOptionThree = document.createElement('option');
+    prioOptionThree.setAttribute('value', 'Low');
+    prioOptionThree.textContent = "Low";
+    createTodoPrio.appendChild(prioOptionThree);
+    const createTodoDateLabel = document.createElement('label');
+    createTodoDateLabel.setAttribute('for', 'createTodoDate');
+    createTodoDateLabel.textContent = "Due Date: ";
+    todoForm.appendChild(createTodoDateLabel);
+    const createTodoDate = document.createElement('input');
+    createTodoDate.setAttribute('type', 'date');
+    createTodoDate.setAttribute('id', 'createTodoDate');
+    todoForm.appendChild(createTodoDate);
+    const createTodoButtonDiv = document.createElement('div');
+    createTodoButtonDiv.setAttribute('id', 'createTodoButtonDiv');
+    todoForm.appendChild(createTodoButtonDiv);
+    const createTodoSubmitButton = document.createElement('button');
+    createTodoSubmitButton.textContent = "Submit";
+    createTodoSubmitButton.addEventListener('click', createNewTodo);
+    createTodoButtonDiv.appendChild(createTodoSubmitButton);
+    const createTodoCancelButton = document.createElement('button');
+    createTodoCancelButton.textContent = "Cancel";
+    createTodoCancelButton.addEventListener('click', clearNewTodoForm);
+    createTodoButtonDiv.appendChild(createTodoCancelButton);
 }
 
 export {displaySidebarContent, displayTodos, clearSidebar, clearNewProjectForm, createNewProjectForm, displayProject };

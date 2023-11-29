@@ -9,7 +9,7 @@ class Project {
 }
 
 class Todo extends Project {
-    constructor(title, description = "", dueDate = "None", priority = "Low") {
+    constructor(title, description = "", dueDate, priority = "Low") {
         super(title, description);
         this.dueDate = dueDate;
         this.priority = priority;
@@ -21,14 +21,20 @@ const projects = [];
 function createNewProject() {
     const projectTitle = document.querySelector('#createProjectTitle').value;
     const projectDesc = document.querySelector('#createProjectDescription').value;
+    const newTodo = new Project(projectTitle, projectDesc);
+    projects.push(newTodo);
+    clearNewProjectForm();
+    clearSidebar();
+    displaySidebarContent(projects);
+}
+
+function createNewTodo() {
+    const todoTitle = document.querySelector('#createTodoTitle').value;
+    const todoDesc = document.querySelector('#createTodoDesc').value;
+    const todoPriority = document.querySelector('#createTodoPrio').value;
+    const todoDate = document.querySelector('#createTodoDate').value;
+    const newTodo = new Todo(todoTitle, todoDesc, todoPriority, todoDate);
     
-    if (projectTitle) {
-        const newTodo = new Project(projectTitle, projectDesc);
-        projects.push(newTodo);
-        clearNewProjectForm();
-        clearSidebar();
-        displaySidebarContent(projects);
-    }
 }
 
 function setupDefaults() {
@@ -42,4 +48,4 @@ function setupDefaults() {
 }
 
 
-export { createNewProject, setupDefaults };
+export { createNewProject, setupDefaults, createNewTodo };
