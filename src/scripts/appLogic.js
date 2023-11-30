@@ -41,6 +41,8 @@ function createNewTodo() {
     clearNewTodoForm();
     clearTodos();
     displayTodos(projects[projectIndex]);
+    clearSidebar();
+    displaySidebarContent(projects);
 }
 
 function selectProject() {
