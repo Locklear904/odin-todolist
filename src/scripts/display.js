@@ -77,9 +77,10 @@ function displayTodos(project) {
     });
 }
 
-function displayProject(project) {
+function displayProject(project, projects) {
     const projectDiv = document.createElement('div');
     projectDiv.setAttribute('class', 'projectDiv');
+    projectDiv.setAttribute('data-index', projects.indexOf(project));
     main.prepend(projectDiv);
     const projectHeader = document.createElement('div');
     projectHeader.setAttribute('class', 'projectHeader');
@@ -137,6 +138,13 @@ function clearNewTodoForm() {
     const todoForm = document.querySelector('#todoForm');
     while (todoForm.firstChild) {
         todoForm.removeChild(todoForm.firstChild);
+    }
+}
+
+function clearTodos() {
+    const main = document.querySelector('main');
+    while (main.children[2]) {
+        main.removeChild(main.children[2]);
     }
 }
 
@@ -245,4 +253,4 @@ function createNewTodoForm() {
     createTodoButtonDiv.appendChild(createTodoCancelButton);
 }
 
-export {displaySidebarContent, displayTodos, clearSidebar, clearNewProjectForm, clearMain, createNewProjectForm, displayProject };
+export {displaySidebarContent, displayTodos, clearTodos, clearSidebar, clearNewProjectForm, clearMain, clearNewTodoForm, createNewProjectForm, displayProject };

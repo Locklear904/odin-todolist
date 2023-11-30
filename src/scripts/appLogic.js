@@ -1,4 +1,4 @@
-import { displaySidebarContent, clearNewProjectForm, displayTodos, clearMain, clearSidebar, displayProject } from "./display";
+import { displaySidebarContent, clearNewProjectForm, clearTodos, clearNewTodoForm, displayTodos, clearMain, clearSidebar, displayProject } from "./display";
 
 class Project {
     constructor(title = "Default", description = "") {
@@ -21,26 +21,32 @@ const projects = [];
 function createNewProject() {
     const projectTitle = document.querySelector('#createProjectTitle').value;
     const projectDesc = document.querySelector('#createProjectDescription').value;
-    const newTodo = new Project(projectTitle, projectDesc);
-    projects.push(newTodo);
+    const newProject = new Project(projectTitle, projectDesc);
+    projects.push(newProject);
     clearNewProjectForm();
     clearSidebar();
     displaySidebarContent(projects);
 }
 
 function createNewTodo() {
+    const projectDiv = document.querySelector('.projectDiv');
+    const projectIndex = projectDiv.getAttribute('data-index');
+    const currentProject = projects[projectIndex];
     const todoTitle = document.querySelector('#createTodoTitle').value;
     const todoDesc = document.querySelector('#createTodoDesc').value;
     const todoPriority = document.querySelector('#createTodoPrio').value;
     const todoDate = document.querySelector('#createTodoDate').value;
-    const newTodo = new Todo(todoTitle, todoDesc, todoPriority, todoDate);
-
+    const newTodo = new Todo(todoTitle, todoDesc, todoDate,todoPriority);
+    currentProject.todos.push(newTodo);
+    clearNewTodoForm();
+    clearTodos();
+    displayTodos(projects[projectIndex]);
 }
 
 function selectProject() {
     clearMain();
     let projectIndex = this.parentElement.getAttribute('data-index');
-    displayProject(projects[projectIndex]);
+    displayProject(projects[projectIndex], projects);
     displayTodos(projects[projectIndex]);
 }
 
@@ -50,7 +56,7 @@ function setupDefaults() {
     projects.push(defaultProject);
     defaultProject.todos.push(defaultTodo);
     displaySidebarContent(projects);
-    displayProject(projects[0]);
+    displayProject(projects[0], projects);
     displayTodos(projects[0]);
 }
 
