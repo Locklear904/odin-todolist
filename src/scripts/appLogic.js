@@ -1,4 +1,4 @@
-import { displaySidebarContent, clearNewProjectForm, displayTodos, clearSidebar, displayProject } from "./display";
+import { displaySidebarContent, clearNewProjectForm, displayTodos, clearMain, clearSidebar, displayProject } from "./display";
 
 class Project {
     constructor(title = "Default", description = "") {
@@ -34,7 +34,14 @@ function createNewTodo() {
     const todoPriority = document.querySelector('#createTodoPrio').value;
     const todoDate = document.querySelector('#createTodoDate').value;
     const newTodo = new Todo(todoTitle, todoDesc, todoPriority, todoDate);
-    
+
+}
+
+function selectProject() {
+    clearMain();
+    let projectIndex = this.parentElement.getAttribute('data-index');
+    displayProject(projects[projectIndex]);
+    displayTodos(projects[projectIndex]);
 }
 
 function setupDefaults() {
@@ -44,8 +51,8 @@ function setupDefaults() {
     defaultProject.todos.push(defaultTodo);
     displaySidebarContent(projects);
     displayProject(projects[0]);
-    displayTodos(defaultProject);
+    displayTodos(projects[0]);
 }
 
 
-export { createNewProject, setupDefaults, createNewTodo };
+export { createNewProject, setupDefaults, createNewTodo, selectProject };

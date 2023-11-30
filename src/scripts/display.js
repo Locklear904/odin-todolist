@@ -1,6 +1,6 @@
 const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
-import { createNewProject, createNewTodo } from "./appLogic";
+import { createNewProject, createNewTodo, selectProject } from "./appLogic";
 
 function displaySidebarTodos(project, projectTodos) {
     project.todos.forEach((todo) => {
@@ -19,9 +19,11 @@ function displaySidebarContent(projects) {
         //Populates projects
         let projectDiv = document.createElement('div');
         projectDiv.setAttribute('class', 'sideProjectDiv');
+        projectDiv.setAttribute('data-index', projects.indexOf(project));
         projectsList.appendChild(projectDiv);
         let projectTitle = document.createElement('button');
         projectTitle.textContent = project.title;
+        projectTitle.addEventListener('click', selectProject);
         projectTitle.setAttribute('class', 'sideProjectTitle');
         projectDiv.appendChild(projectTitle);
         let projectTodos = document.createElement('ul');
@@ -110,6 +112,13 @@ function displayProject(project) {
     projectDiv.appendChild(projectDescription);
 }
 
+function clearMain() {
+    const main = document.querySelector('main');
+    while (main.firstChild) {
+        main.removeChild(main.firstChild);
+    }
+}
+
 function clearSidebar() {
     const projectsList = document.querySelector('#projectsList');
     while (projectsList.firstChild) {
@@ -171,7 +180,10 @@ function createNewProjectForm() {
 }
 
 function createNewTodoForm() {
-    const todoForm = document.querySelector('#todoForm');
+    const projectDiv = document.querySelector('.projectDiv');
+    const todoForm = document.createElement('form');
+    todoForm.setAttribute('id', 'todoForm');
+    projectDiv.after(todoForm);
     if (todoForm.firstChild) {
         return;
     }
@@ -233,4 +245,4 @@ function createNewTodoForm() {
     createTodoButtonDiv.appendChild(createTodoCancelButton);
 }
 
-export {displaySidebarContent, displayTodos, clearSidebar, clearNewProjectForm, createNewProjectForm, displayProject };
+export {displaySidebarContent, displayTodos, clearSidebar, clearNewProjectForm, clearMain, createNewProjectForm, displayProject };
