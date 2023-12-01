@@ -40,7 +40,21 @@ function createNewTodo() {
     currentProject.todos.push(newTodo);
     clearNewTodoForm();
     clearTodos();
-    displayTodos(projects[projectIndex]);
+    displayTodos(currentProject);
+    clearSidebar();
+    displaySidebarContent(projects);
+}
+
+function deleteTodo() {
+    const projectDiv = document.querySelector('.projectDiv');
+    const projectIndex = projectDiv.getAttribute('data-index');
+    const currentProject = projects[projectIndex];
+    const todoDiv = document.querySelector('.todoDiv');
+    const todoIndex = todoDiv.getAttribute('data-index');
+    const currentTodo = currentProject.todos[todoIndex];
+    currentProject.todos.splice(todoIndex, 1);
+    clearTodos();
+    displayTodos(currentProject);
     clearSidebar();
     displaySidebarContent(projects);
 }
@@ -63,4 +77,4 @@ function setupDefaults() {
 }
 
 
-export { createNewProject, setupDefaults, createNewTodo, selectProject };
+export { createNewProject, setupDefaults, createNewTodo, selectProject, deleteTodo };

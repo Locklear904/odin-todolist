@@ -1,6 +1,6 @@
 const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
-import { createNewProject, createNewTodo, selectProject } from "./appLogic";
+import { createNewProject, createNewTodo, selectProject, deleteTodo } from "./appLogic";
 
 function displaySidebarTodos(project, projectTodos) {
     project.todos.forEach((todo) => {
@@ -38,6 +38,7 @@ function displayTodos(project) {
     project.todos.forEach(todo => {
         let todoDiv = document.createElement('div');
         todoDiv.setAttribute('class', 'todoDiv');
+        todoDiv.setAttribute('data-index', project.todos.indexOf(todo));
         main.appendChild(todoDiv);
         let todoHeader = document.createElement('div');
         todoHeader.setAttribute('class', 'todoHeader');
@@ -56,6 +57,7 @@ function displayTodos(project) {
         let todoDeleteBtn = document.createElement('button');
         todoDeleteBtn.setAttribute('class', 'todoDeleteBtn');
         todoDeleteBtn.setAttribute('title', 'Delete Todo')
+        todoDeleteBtn.addEventListener('click', deleteTodo);
         todoDeleteBtn.textContent = "x";
         todoBtnDiv.appendChild(todoDeleteBtn);
         let todoInfoDiv = document.createElement('div');
@@ -116,8 +118,8 @@ function clearNewTodoForm() {
 
 function clearTodos() {
     const main = document.querySelector('main');
-    while (main.children[2]) {
-        main.removeChild(main.children[2]);
+    while (main.children[1]) {
+        main.removeChild(main.children[1]);
     }
 }
 
