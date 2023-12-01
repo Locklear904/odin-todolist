@@ -78,45 +78,18 @@ function displayTodos(project) {
 }
 
 function displayProject(project, projects) {
-    const projectDiv = document.createElement('div');
-    projectDiv.setAttribute('class', 'projectDiv');
+    const projectDiv = document.querySelector('.projectDiv');
     projectDiv.setAttribute('data-index', projects.indexOf(project));
-    main.prepend(projectDiv);
-    const projectHeader = document.createElement('div');
-    projectHeader.setAttribute('class', 'projectHeader');
-    projectDiv.appendChild(projectHeader);
-    const projectTitle = document.createElement('h2');
+    const projectTitle = document.querySelector('.projectTitle');
     projectTitle.textContent = project.title;
-    projectTitle.setAttribute('class', 'projectTitle');
-    projectHeader.appendChild(projectTitle);
-    const projectBtnDiv = document.createElement('div');
-    projectBtnDiv.setAttribute('id', 'projectBtnDiv');
-    projectHeader.appendChild(projectBtnDiv);
-    const projectEditButton = document.createElement('button')
-    projectEditButton.setAttribute('class', 'projectEditBtn');
-    projectEditButton.textContent = "Edit";
-    projectBtnDiv.appendChild(projectEditButton);
-    const createTodoBtn = document.createElement('button');
-    createTodoBtn.setAttribute('id', 'createTodoBtn');
-    createTodoBtn.setAttribute('title', 'Create New Todo');
-    createTodoBtn.textContent = "+";
-    createTodoBtn.addEventListener('click', createNewTodoForm);
-    projectBtnDiv.appendChild(createTodoBtn);
-    const projectDeleteBtn = document.createElement('button');
-    projectDeleteBtn.setAttribute('id', 'projectDeleteBtn');
-    projectDeleteBtn.setAttribute('title', 'Delete Project');
-    projectDeleteBtn.textContent = "x";
-    projectBtnDiv.appendChild(projectDeleteBtn);
-    const projectDescription = document.createElement('p');
-    projectDescription.setAttribute('class', 'projectDescription');
+    const projectDescription = document.querySelector('.projectDescription');
     projectDescription.textContent = project.description;
-    projectDiv.appendChild(projectDescription);
 }
 
 function clearMain() {
-    const main = document.querySelector('main');
-    while (main.firstChild) {
-        main.removeChild(main.firstChild);
+    const projectDiv = document.querySelector('.projectDiv');
+    while (projectDiv.nextElementSibling) {
+        projectDiv.nextElementSibling.remove();
     }
 }
 
@@ -253,4 +226,4 @@ function createNewTodoForm() {
     createTodoButtonDiv.appendChild(createTodoCancelButton);
 }
 
-export {displaySidebarContent, displayTodos, clearTodos, clearSidebar, clearNewProjectForm, clearMain, clearNewTodoForm, createNewProjectForm, displayProject };
+export {displaySidebarContent, displayTodos, clearTodos, clearSidebar, clearNewProjectForm, clearMain, clearNewTodoForm, createNewProjectForm, displayProject, createNewTodoForm };
