@@ -59,6 +59,22 @@ function deleteTodo() {
     displaySidebarContent(projects);
 }
 
+function deleteProject() {
+    const projectDiv = document.querySelector('.projectDiv');
+    const projectIndex = projectDiv.getAttribute('data-index');
+    const currentProject = projects[projectIndex];
+    if (projectIndex > 0) {
+        projects.splice(projectIndex, 1);
+        clearMain();
+        displayProject(projects[projectIndex - 1], projects);
+        displayTodos(projects[projectIndex - 1]);
+        clearSidebar();
+        displaySidebarContent(projects);
+    } else {
+        alert("Unable to delete first project")
+    }
+}
+
 function selectProject() {
     clearMain();
     let projectIndex = this.parentElement.getAttribute('data-index');
@@ -77,4 +93,4 @@ function setupDefaults() {
 }
 
 
-export { createNewProject, setupDefaults, createNewTodo, selectProject, deleteTodo };
+export { createNewProject, setupDefaults, createNewTodo, selectProject, deleteTodo, deleteProject };
