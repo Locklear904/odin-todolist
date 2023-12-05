@@ -49,9 +49,8 @@ function deleteTodo() {
     const projectDiv = document.querySelector('.projectDiv');
     const projectIndex = projectDiv.getAttribute('data-index');
     const currentProject = projects[projectIndex];
-    const todoDiv = document.querySelector('.todoDiv');
+    const todoDiv = this.parentElement.parentElement.parentElement;
     const todoIndex = todoDiv.getAttribute('data-index');
-    const currentTodo = currentProject.todos[todoIndex];
     currentProject.todos.splice(todoIndex, 1);
     clearTodos();
     displayTodos(currentProject);
@@ -62,7 +61,6 @@ function deleteTodo() {
 function deleteProject() {
     const projectDiv = document.querySelector('.projectDiv');
     const projectIndex = projectDiv.getAttribute('data-index');
-    const currentProject = projects[projectIndex];
     if (projectIndex > 0) {
         projects.splice(projectIndex, 1);
         clearMain();
@@ -72,6 +70,41 @@ function deleteProject() {
         displaySidebarContent(projects);
     } else {
         alert("Unable to delete first project")
+    }
+}
+
+function toggleTodoDetails() {
+    if (this.textContent === "Show Details") {
+        const projectDiv = document.querySelector('.projectDiv');
+        const projectIndex = projectDiv.getAttribute('data-index');
+        const currentProject = projects[projectIndex];
+        const todoDiv = this.parentElement.parentElement.parentElement;
+        const todoIndex = todoDiv.getAttribute('data-index');
+        const todo = currentProject.todos[todoIndex];
+        const todoDetailsDiv = document.createElement('div');
+        todoDetailsDiv.setAttribute('class', 'todoDetailsDiv');
+        todoDiv.appendChild(todoDetailsDiv);
+        let todoInfoDiv = document.createElement('div');
+        todoInfoDiv.setAttribute('class', 'todoInfoDiv');
+        todoDetailsDiv.appendChild(todoInfoDiv);
+        let todoDueDate = document.createElement('time');
+        todoDueDate.setAttribute('class', 'todoDueDate');
+        todoDueDate.setAttribute('datetime', todo.dueDate);
+        todoDueDate.textContent = `Due Date: ${todo.dueDate}`;
+        todoInfoDiv.appendChild(todoDueDate);
+        let todoPriority = document.createElement('p');
+        todoPriority.setAttribute('class', 'todoPriority');
+        todoPriority.textContent = `Priority: ${todo.priority}`;
+        todoInfoDiv.appendChild(todoPriority);
+        let todoDescription = document.createElement('p');
+        todoDescription.setAttribute('class', 'todoDescription');
+        todoDescription.textContent = todo.description;
+        todoDetailsDiv.appendChild(todoDescription);
+        this.textContent = "Hide Details";
+    } else {
+        const todoDiv = this.parentElement.parentElement.parentElement;
+        todoDiv.removeChild(todoDiv.lastElementChild);
+        this.textContent = "Show Details";
     }
 }
 
@@ -93,4 +126,4 @@ function setupDefaults() {
 }
 
 
-export { createNewProject, setupDefaults, createNewTodo, selectProject, deleteTodo, deleteProject };
+export { createNewProject, setupDefaults, createNewTodo, selectProject, deleteTodo, deleteProject, toggleTodoDetails };

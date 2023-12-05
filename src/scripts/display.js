@@ -1,6 +1,6 @@
 const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
-import { createNewProject, createNewTodo, selectProject, deleteTodo } from "./appLogic";
+import { createNewProject, createNewTodo, selectProject, deleteTodo, toggleTodoDetails } from "./appLogic";
 
 function displaySidebarTodos(project, projectTodos) {
     project.todos.forEach((todo) => {
@@ -50,6 +50,11 @@ function displayTodos(project) {
         let todoBtnDiv = document.createElement('div');
         todoBtnDiv.setAttribute('class', 'todoBtnDiv');
         todoHeader.appendChild(todoBtnDiv);
+        let todoDetailsBtn = document.createElement('button');
+        todoDetailsBtn.setAttribute('class', 'todoDetailsBtn');
+        todoDetailsBtn.textContent = "Show Details";
+        todoDetailsBtn.addEventListener('click', toggleTodoDetails);
+        todoBtnDiv.appendChild(todoDetailsBtn);
         let todoEditBtn = document.createElement('button');
         todoEditBtn.setAttribute('class', 'todoEditBtn');
         todoEditBtn.textContent = "Edit";
@@ -60,22 +65,6 @@ function displayTodos(project) {
         todoDeleteBtn.addEventListener('click', deleteTodo);
         todoDeleteBtn.textContent = "x";
         todoBtnDiv.appendChild(todoDeleteBtn);
-        let todoInfoDiv = document.createElement('div');
-        todoInfoDiv.setAttribute('class', 'todoInfoDiv');
-        todoDiv.appendChild(todoInfoDiv);
-        let todoDueDate = document.createElement('time');
-        todoDueDate.setAttribute('class', 'todoDueDate');
-        todoDueDate.setAttribute('datetime', todo.dueDate);
-        todoDueDate.textContent = `Due Date: ${todo.dueDate}`;
-        todoInfoDiv.appendChild(todoDueDate);
-        let todoPriority = document.createElement('p');
-        todoPriority.setAttribute('class', 'todoPriority');
-        todoPriority.textContent = `Priority: ${todo.priority}`;
-        todoInfoDiv.appendChild(todoPriority);
-        let todoDescription = document.createElement('p');
-        todoDescription.setAttribute('class', 'todoDescription');
-        todoDescription.textContent = todo.description;
-        todoDiv.appendChild(todoDescription);
     });
 }
 

@@ -29,6 +29,11 @@ main {
     align-items: center;
 }
 
+.projectDiv {
+    display: flex;
+    flex-direction: column;
+}
+
 .projectDiv, .todoDiv {
     width: 75%;
 }
@@ -37,6 +42,10 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+#todoHeader {
+    align-self: center;
 }
 
 #todoForm {
