@@ -45,6 +45,60 @@ function createNewTodo() {
     displaySidebarContent(projects);
 }
 
+function editProject() {
+    if (this.textContent === "Edit") {
+        const projectHeader = document.querySelector('.projectHeader');
+        const projectDiv = document.querySelector('.projectDiv');
+        const projectIndex = projectDiv.getAttribute('data-index');
+        const currentProject = projects[projectIndex];
+        const projectTitleLabel = document.createElement('label');
+        projectTitleLabel.setAttribute('id', 'projectTitleLabel');
+        projectTitleLabel.setAttribute('for', 'projectTitleEdit');
+        projectTitleLabel.textContent = "Project Title: "
+        projectHeader.prepend(projectTitleLabel);
+        const projectTitle = document.querySelector('.projectTitle');
+        const projectTitleInput = document.createElement('input');
+        projectTitleInput.setAttribute('id', 'projectTitleEdit');
+        projectTitleInput.value = currentProject.title;
+        projectHeader.replaceChild(projectTitleInput, projectTitle);
+        const projectDescription = document.querySelector('.projectDescription');
+        const projectDescriptionLabel = document.createElement('label');
+        projectDescriptionLabel.setAttribute('id', 'projectDescriptionLabel');
+        projectDescriptionLabel.setAttribute('for', 'projectDescriptionEdit');
+        projectDescriptionLabel.textContent = "Project Description: ";
+        projectDiv.insertBefore(projectDescriptionLabel, projectDescription);
+        const projectDescriptionInput = document.createElement('textarea');
+        projectDescriptionInput.setAttribute('id', 'projectDescriptionEdit');
+        projectDescriptionInput.value = currentProject.description; 
+        projectDiv.replaceChild(projectDescriptionInput, projectDescription);
+        this.textContent = "Submit";
+    } else if (this.textContent = "Submit") {
+        const projectDiv = document.querySelector('.projectDiv');
+        const projectHeader = document.querySelector('.projectHeader');
+        const projectIndex = projectDiv.getAttribute('data-index');
+        const currentProject = projects[projectIndex];
+        console.log(currentProject);
+        const projectTitleEdit = document.querySelector('#projectTitleEdit');
+        const projectDescriptionEdit = document.querySelector('#projectDescriptionEdit');
+        currentProject.title = projectTitleEdit.value;
+        currentProject.description = projectDescriptionEdit.value;
+        const projectTitleLabel = document.querySelector('#projectTitleLabel');
+        projectTitleLabel.remove();
+        const projectDescriptionLabel = document.querySelector('#projectDescriptionLabel');
+        projectDescriptionLabel.remove();
+        const projectTitle = document.createElement('h2');
+        projectTitle.setAttribute('class', 'projectTitle');
+        projectTitle.textContent = currentProject.title;
+        projectHeader.replaceChild(projectTitle, projectTitleEdit);
+        const projectDescription = document.createElement('p');
+        projectDescription.setAttribute('class', 'projectDescription');
+        projectDescription.textContent = currentProject.description;
+        projectDiv.replaceChild(projectDescription, projectDescriptionEdit);
+        this.textContent = "Edit";
+        console.log(currentProject)
+    }
+}
+
 function deleteTodo() {
     const projectDiv = document.querySelector('.projectDiv');
     const projectIndex = projectDiv.getAttribute('data-index');
@@ -126,4 +180,4 @@ function setupDefaults() {
 }
 
 
-export { createNewProject, setupDefaults, createNewTodo, selectProject, deleteTodo, deleteProject, toggleTodoDetails };
+export { createNewProject, setupDefaults, createNewTodo, selectProject, deleteTodo, deleteProject, toggleTodoDetails, editProject };

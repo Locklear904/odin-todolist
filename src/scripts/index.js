@@ -1,6 +1,6 @@
 import '../style.css';
 import { createNewProjectForm, createNewTodoForm } from './display.js';
-import { setupDefaults, deleteProject } from './appLogic.js';
+import { setupDefaults, deleteProject, editProject } from './appLogic.js';
 
 const createProjectButton = document.querySelector('#addProjectButton');
 createProjectButton.addEventListener('click', createNewProjectForm);
@@ -16,5 +16,8 @@ projectDeleteBtn.addEventListener('click', function() {
 
 const createTodoBtn = document.querySelector('#createTodoBtn');
 createTodoBtn.addEventListener('click', createNewTodoForm);
+
+const projectEditBtn = document.querySelector('#projectEditBtn');
+projectEditBtn.addEventListener('click', editProject);
 
 setupDefaults();
