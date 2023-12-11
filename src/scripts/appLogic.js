@@ -97,11 +97,11 @@ function editProject() {
     }
 }
 
-function deleteTodo() {
+function deleteTodo(event) {
     const projectDiv = document.querySelector('.projectDiv');
     const projectIndex = projectDiv.getAttribute('data-index');
     const currentProject = projects[projectIndex];
-    const todoDiv = this.parentElement.parentElement.parentElement;
+    const todoDiv = event.target.closest('.todoDiv');
     const todoIndex = todoDiv.getAttribute('data-index');
     currentProject.todos.splice(todoIndex, 1);
     clearTodos();
@@ -125,12 +125,12 @@ function deleteProject() {
     }
 }
 
-function toggleTodoDetails() {
-    if (this.textContent === "Show Details") {
+function toggleTodoDetails(event) {
+    if (event.target.textContent === "Show Details") {
         const projectDiv = document.querySelector('.projectDiv');
         const projectIndex = projectDiv.getAttribute('data-index');
         const currentProject = projects[projectIndex];
-        const todoDiv = this.parentElement.parentElement.parentElement;
+        const todoDiv = event.target.closest('.todoDiv');
         const todoIndex = todoDiv.getAttribute('data-index');
         const todo = currentProject.todos[todoIndex];
         const todoDetailsDiv = document.createElement('div');
@@ -152,20 +152,20 @@ function toggleTodoDetails() {
         todoDescription.setAttribute('class', 'todoDescription');
         todoDescription.textContent = todo.description;
         todoDetailsDiv.appendChild(todoDescription);
-        this.textContent = "Hide Details";
+        event.target.textContent = "Hide Details";
     } else {
-        const todoDiv = this.parentElement.parentElement.parentElement;
+        const todoDiv = event.target.closest('.todoDiv');
         todoDiv.removeChild(todoDiv.lastElementChild);
-        this.textContent = "Show Details";
+        event.target.textContent = "Show Details";
     }
 }
 
-function editTodo() {
-    if (this.textContent === "Edit") {
+function editTodo(event) {
+    if (event.target.textContent === "Edit") {
         const projectDiv = document.querySelector('.projectDiv');
         const projectIndex = projectDiv.getAttribute('data-index');
         const currentProject = projects[projectIndex];
-        const todoDiv = this.parentElement.parentElement.parentElement;
+        const todoDiv = event.target.closest('.todoDiv');
         const todoIndex = todoDiv.getAttribute('data-index');
         const todo = currentProject.todos[todoIndex];
         const todoEditDiv = document.createElement('div');
@@ -218,12 +218,12 @@ function editTodo() {
         todoEditDate.value = todo.dueDate;
         todoEditDiv.appendChild(todoEditDate);
 
-        this.textContent = "Submit";
-    } else if (this.textContent === "Submit") {
+        event.target.textContent = "Submit";
+    } else if (event.target.textContent === "Submit") {
         const projectDiv = document.querySelector('.projectDiv');
         const projectIndex = projectDiv.getAttribute('data-index');
         const currentProject = projects[projectIndex];
-        const todoDiv = this.parentElement.parentElement.parentElement;
+        const todoDiv = event.target.closest('.todoDiv');
         const todoIndex = todoDiv.getAttribute('data-index');
         const todo = currentProject.todos[todoIndex];
         const todoEditDiv = document.querySelector(`#todoEditDiv${todoIndex}`);
@@ -238,13 +238,14 @@ function editTodo() {
         clearMain();
         displayTodos(currentProject);
 
-        this.textContent = "Edit";
+        event.target.textContent = "Edit";
     }
 }
 
-function selectProject() {
+function selectProject(event) {
     clearMain();
-    let projectIndex = this.parentElement.getAttribute('data-index');
+    const sideProjectDiv = event.target.closest('.sideProjectDiv');
+    const projectIndex = sideProjectDiv.getAttribute('data-index');
     displayProject(projects[projectIndex], projects);
     displayTodos(projects[projectIndex]);
 }

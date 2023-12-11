@@ -1,6 +1,6 @@
 const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
-import { createNewProject, createNewTodo, editTodo, selectProject, deleteTodo, toggleTodoDetails } from "./appLogic";
+import { createNewProject, createNewTodo, selectProject } from "./appLogic";
 
 function displaySidebarTodos(project, projectTodos) {
     project.todos.forEach((todo) => {
@@ -23,7 +23,6 @@ function displaySidebarContent(projects) {
         projectsList.appendChild(projectDiv);
         let projectTitle = document.createElement('button');
         projectTitle.textContent = project.title;
-        projectTitle.addEventListener('click', selectProject);
         projectTitle.setAttribute('class', 'sideProjectTitle');
         projectDiv.appendChild(projectTitle);
         let projectTodos = document.createElement('ul');
@@ -53,17 +52,14 @@ function displayTodos(project) {
         let todoDetailsBtn = document.createElement('button');
         todoDetailsBtn.setAttribute('class', 'todoDetailsBtn');
         todoDetailsBtn.textContent = "Show Details";
-        todoDetailsBtn.addEventListener('click', toggleTodoDetails);
         todoBtnDiv.appendChild(todoDetailsBtn);
         let todoEditBtn = document.createElement('button');
         todoEditBtn.setAttribute('class', 'todoEditBtn');
         todoEditBtn.textContent = "Edit";
-        todoEditBtn.addEventListener('click', editTodo);
         todoBtnDiv.appendChild(todoEditBtn);
         let todoDeleteBtn = document.createElement('button');
         todoDeleteBtn.setAttribute('class', 'todoDeleteBtn');
         todoDeleteBtn.setAttribute('title', 'Delete Todo')
-        todoDeleteBtn.addEventListener('click', deleteTodo);
         todoDeleteBtn.textContent = "x";
         todoBtnDiv.appendChild(todoDeleteBtn);
     });
