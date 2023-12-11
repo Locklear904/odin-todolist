@@ -56,6 +56,11 @@ main {
     border-top: 1px solid black;
 }
 
+.todoEditDiv {
+    display: flex;
+    flex-direction: column;
+}
+
 #sidebar {
     grid-row: 2 / 3;
     grid-column: 1 / 2;

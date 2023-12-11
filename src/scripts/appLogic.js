@@ -77,7 +77,6 @@ function editProject() {
         const projectHeader = document.querySelector('.projectHeader');
         const projectIndex = projectDiv.getAttribute('data-index');
         const currentProject = projects[projectIndex];
-        console.log(currentProject);
         const projectTitleEdit = document.querySelector('#projectTitleEdit');
         const projectDescriptionEdit = document.querySelector('#projectDescriptionEdit');
         currentProject.title = projectTitleEdit.value;
@@ -95,7 +94,6 @@ function editProject() {
         projectDescription.textContent = currentProject.description;
         projectDiv.replaceChild(projectDescription, projectDescriptionEdit);
         this.textContent = "Edit";
-        console.log(currentProject)
     }
 }
 
@@ -162,6 +160,88 @@ function toggleTodoDetails() {
     }
 }
 
+function editTodo() {
+    if (this.textContent === "Edit") {
+        const projectDiv = document.querySelector('.projectDiv');
+        const projectIndex = projectDiv.getAttribute('data-index');
+        const currentProject = projects[projectIndex];
+        const todoDiv = this.parentElement.parentElement.parentElement;
+        const todoIndex = todoDiv.getAttribute('data-index');
+        const todo = currentProject.todos[todoIndex];
+        const todoEditDiv = document.createElement('div');
+        todoEditDiv.setAttribute('id', `todoEditDiv${todoIndex}`);
+        todoEditDiv.setAttribute('class', 'todoEditDiv');
+        todoDiv.appendChild(todoEditDiv);
+        const todoEditTitleLabel = document.createElement('label');
+        todoEditTitleLabel.setAttribute('for', `todoEditTitle${todoIndex}`);
+        todoEditTitleLabel.textContent = "Todo Title: "
+        todoEditDiv.appendChild(todoEditTitleLabel);
+        const todoEditTitle = document.createElement('input');
+        todoEditTitle.setAttribute('id', `todoEditTitle${todoIndex}`);
+        todoEditTitle.value = todo.title;
+        todoEditDiv.appendChild(todoEditTitle);
+        const todoEditDescriptionLabel = document.createElement('label');
+        todoEditDescriptionLabel.setAttribute('for', `todoEditDescription${todoIndex}`);
+        todoEditDescriptionLabel.textContent = "Todo Description: ";
+        todoEditDiv.appendChild(todoEditDescriptionLabel);
+        const todoEditDescription = document.createElement('textarea');
+        todoEditDescription.setAttribute('id', `todoEditDescription${todoIndex}`);
+        todoEditDescription.value = todo.description;
+        todoEditDiv.appendChild(todoEditDescription);
+        const todoEditPriorityLabel = document.createElement('label');
+        todoEditPriorityLabel.setAttribute('for', `todoEditPriority${todoIndex}`);
+        todoEditPriorityLabel.textContent = "Todo Priority: ";
+        todoEditDiv.appendChild(todoEditPriorityLabel);
+        const todoEditPriority = document.createElement('select');
+        todoEditPriority.setAttribute('id', `todoEditPriority${todoIndex}`);
+        todoEditDiv.appendChild(todoEditPriority);
+        const todoEditPriorityHigh = document.createElement('option');
+        todoEditPriorityHigh.setAttribute('value', 'High');
+        todoEditPriorityHigh.textContent = "High";
+        todoEditPriority.appendChild(todoEditPriorityHigh);
+        const todoEditPriorityMedium = document.createElement('option');
+        todoEditPriorityMedium.setAttribute('value', 'Medium');
+        todoEditPriorityMedium.textContent = "Medium";
+        todoEditPriority.appendChild(todoEditPriorityMedium);
+        const todoEditPriorityLow = document.createElement('option');
+        todoEditPriorityLow.setAttribute('value', 'Low');
+        todoEditPriorityLow.textContent = "Low";
+        todoEditPriority.appendChild(todoEditPriorityLow);
+        todoEditPriority.value = todo.priority;
+        const todoEditDateLabel = document.createElement('label');
+        todoEditDateLabel.setAttribute('for', `todoEditDate${todoIndex}`);
+        todoEditDateLabel.textContent = "Due Date: ";
+        todoEditDiv.appendChild(todoEditDateLabel);
+        const todoEditDate = document.createElement('input');
+        todoEditDate.setAttribute('id', `todoEditDate${todoIndex}`);
+        todoEditDate.setAttribute('type', 'date');
+        todoEditDate.value = todo.dueDate;
+        todoEditDiv.appendChild(todoEditDate);
+
+        this.textContent = "Submit";
+    } else if (this.textContent === "Submit") {
+        const projectDiv = document.querySelector('.projectDiv');
+        const projectIndex = projectDiv.getAttribute('data-index');
+        const currentProject = projects[projectIndex];
+        const todoDiv = this.parentElement.parentElement.parentElement;
+        const todoIndex = todoDiv.getAttribute('data-index');
+        const todo = currentProject.todos[todoIndex];
+        const todoEditDiv = document.querySelector(`#todoEditDiv${todoIndex}`);
+        const todoEditTitle = document.querySelector(`#todoEditTitle${todoIndex}`);
+        todo.title = todoEditTitle.value;
+        const todoEditDescription = document.querySelector(`#todoEditDescription${todoIndex}`);
+        todo.description = todoEditDescription.value;
+        const todoEditPriority = document.querySelector(`#todoEditPriority${todoIndex}`);
+        todo.priority = todoEditPriority.value;
+        const todoEditDate = document.querySelector(`#todoEditDate${todoIndex}`);
+        todo.dueDate = todoEditDate.value;
+        clearMain();
+        displayTodos(currentProject);
+
+        this.textContent = "Edit";
+    }
+}
+
 function selectProject() {
     clearMain();
     let projectIndex = this.parentElement.getAttribute('data-index');
@@ -180,4 +260,4 @@ function setupDefaults() {
 }
 
 
-export { createNewProject, setupDefaults, createNewTodo, selectProject, deleteTodo, deleteProject, toggleTodoDetails, editProject };
+export { createNewProject, setupDefaults, createNewTodo, editTodo, selectProject, deleteTodo, deleteProject, toggleTodoDetails, editProject };

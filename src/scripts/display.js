@@ -1,6 +1,6 @@
 const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
-import { createNewProject, createNewTodo, selectProject, deleteTodo, toggleTodoDetails } from "./appLogic";
+import { createNewProject, createNewTodo, editTodo, selectProject, deleteTodo, toggleTodoDetails } from "./appLogic";
 
 function displaySidebarTodos(project, projectTodos) {
     project.todos.forEach((todo) => {
@@ -58,6 +58,7 @@ function displayTodos(project) {
         let todoEditBtn = document.createElement('button');
         todoEditBtn.setAttribute('class', 'todoEditBtn');
         todoEditBtn.textContent = "Edit";
+        todoEditBtn.addEventListener('click', editTodo);
         todoBtnDiv.appendChild(todoEditBtn);
         let todoDeleteBtn = document.createElement('button');
         todoDeleteBtn.setAttribute('class', 'todoDeleteBtn');
