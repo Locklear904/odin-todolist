@@ -16,13 +16,14 @@ class Todo extends Project {
     }
 }
 
-const projects = [];
+let projects = [];
 
 function createNewProject() {
     const projectTitle = document.querySelector('#createProjectTitle').value;
     const projectDesc = document.querySelector('#createProjectDescription').value;
     const newProject = new Project(projectTitle, projectDesc);
     projects.push(newProject);
+    saveProjects();
     clearNewProjectForm();
     clearSidebar();
     displaySidebarContent(projects);
@@ -38,6 +39,7 @@ function createNewTodo() {
     const todoDate = document.querySelector('#createTodoDate').value;
     const newTodo = new Todo(todoTitle, todoDesc, todoDate,todoPriority);
     currentProject.todos.push(newTodo);
+    saveProjects();
     clearNewTodoForm();
     clearTodos();
     displayTodos(currentProject);
@@ -74,6 +76,7 @@ function editProject(event) {
         event.target.textContent = "Submit";
     } else if (event.target.textContent = "Submit") {
         submitProjectEdit(projectHeader, projectDiv, currentProject);
+        saveProjects();
         event.target.textContent = "Edit";
     }
 }
@@ -85,6 +88,7 @@ function deleteTodo(event) {
     const todoDiv = event.target.closest('.todoDiv');
     const todoIndex = todoDiv.getAttribute('data-index');
     currentProject.todos.splice(todoIndex, 1);
+    saveProjects();
     clearTodos();
     displayTodos(currentProject);
     clearSidebar();
@@ -96,6 +100,7 @@ function deleteProject() {
     const projectIndex = projectDiv.getAttribute('data-index');
     if (projectIndex > 0) {
         projects.splice(projectIndex, 1);
+        saveProjects();
         clearMain();
         displayProject(projects[projectIndex - 1], projects);
         displayTodos(projects[projectIndex - 1]);
@@ -139,6 +144,7 @@ function editTodo(event) {
         event.target.textContent = "Submit";
     } else if (event.target.textContent === "Submit") {
         submitTodoEdit(todoIndex, todo);
+        saveProjects();
         clearMain();
         displayTodos(currentProject);
         event.target.textContent = "Edit";
@@ -153,11 +159,28 @@ function selectProject(event) {
     displayTodos(projects[projectIndex]);
 }
 
-function setupDefaults() {
+function createDefaultProjectAndTodo() {
     const defaultProject = new Project("Default", "This is the default project");
     const defaultTodo = new Todo("Test Todo", "Test Description", "2023-11-30", "Low");
     projects.push(defaultProject);
     defaultProject.todos.push(defaultTodo);
+}
+
+function loadProjects() {
+    if (localStorage.getItem('projects')) {
+        projects = JSON.parse(localStorage.getItem('projects'));
+    }   else {
+        createDefaultProjectAndTodo();
+    }
+}
+
+function saveProjects() {
+    const projectsJSON = JSON.stringify(projects);
+    localStorage.setItem('projects', projectsJSON);
+}
+
+function setupDefaults() {
+    loadProjects();
     displaySidebarContent(projects);
     displayProject(projects[0], projects);
     displayTodos(projects[0]);
