@@ -1,16 +1,14 @@
 const projectsList = document.querySelector('#projectsList');
 const main = document.querySelector('main');
-import { createNewProject, createNewTodo, selectProject } from "./appLogic";
+import { createNewProject, createNewTodo } from "./appLogic";
 
 function displaySidebarTodos(project, projectTodos) {
     project.todos.forEach((todo) => {
-        let sideTodoDiv = document.createElement('div');
-        sideTodoDiv.setAttribute('class', 'sideTodoDiv');
-        projectTodos.appendChild(sideTodoDiv);
         let sideTodoTitle = document.createElement('li');
         sideTodoTitle.textContent = todo.title;
         sideTodoTitle.setAttribute('class', 'sideTodoTitle');
-        sideTodoDiv.appendChild(sideTodoTitle);
+        sideTodoTitle.classList.add(`todoPriority${todo.priority}`);
+        projectTodos.appendChild(sideTodoTitle);
     });
 }
 
@@ -35,10 +33,12 @@ function displaySidebarContent(projects) {
 
 function displayTodos(project) {
     project.todos.forEach(todo => {
-        let todoDiv = document.createElement('div');
-        todoDiv.setAttribute('class', 'todoDiv');
+        let mainTodoList = document.querySelector('#mainTodoList');
+        let todoDiv = document.createElement('li');
+        todoDiv.classList.add('todoDiv');
+        todoDiv.classList.add(`todoPriority${todo.priority}`);
         todoDiv.setAttribute('data-index', project.todos.indexOf(todo));
-        main.appendChild(todoDiv);
+        mainTodoList.appendChild(todoDiv);
         let todoHeader = document.createElement('div');
         todoHeader.setAttribute('class', 'todoHeader');
         todoDiv.appendChild(todoHeader);
@@ -75,9 +75,9 @@ function displayProject(project, projects) {
 }
 
 function clearMain() {
-    const projectDiv = document.querySelector('.projectDiv');
-    while (projectDiv.nextElementSibling) {
-        projectDiv.nextElementSibling.remove();
+    const mainTodoList = document.querySelector('#mainTodoList');
+    while (mainTodoList.firstChild) {
+        mainTodoList.removeChild(mainTodoList.firstChild);
     }
 }
 
@@ -103,9 +103,9 @@ function clearNewTodoForm() {
 }
 
 function clearTodos() {
-    const main = document.querySelector('main');
-    while (main.children[1]) {
-        main.removeChild(main.children[1]);
+    const mainTodoList = document.querySelector('#mainTodoList');
+    while (mainTodoList.firstChild) {
+        mainTodoList.removeChild(mainTodoList.firstChild);
     }
 }
 
@@ -149,10 +149,10 @@ function createNewProjectForm() {
 }
 
 function createNewTodoForm() {
-    const projectDiv = document.querySelector('.projectDiv');
+    const todoHeader = document.querySelector('#todoHeader');
     const todoForm = document.createElement('form');
     todoForm.setAttribute('id', 'todoForm');
-    projectDiv.after(todoForm);
+    todoHeader.before(todoForm);
     if (todoForm.firstChild) {
         return;
     }
